@@ -96,12 +96,14 @@ while (T > 0):
     print(minNum)
 
     # array of results
-    newPlayers = filter(lambda player: player.resultNum > minNum, Players)
 
-    #Players = newPlayers
+    Players = list(filter(lambda player: player.resultNum > minNum, Players))
 
-    for player in Players:
-        print(player.resultNum)
+    #how to eliminate only 1 player each turn
+
+
+    # for player in Players:
+    #    print(player.resultNum)
     #remove someone from Players
     T=T-1
 
