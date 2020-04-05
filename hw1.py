@@ -1,3 +1,11 @@
+import random
+
+X1 = random.randint(0, 150)
+X2 = random.randint(0, 150)
+
+print("x1:", X1, "X2:", X2)
+
+
 
 def falseIsOne(bool):
     if bool == False:
@@ -9,7 +17,7 @@ def falseIsOne(bool):
 
 
 
-        
+
 
 
 
