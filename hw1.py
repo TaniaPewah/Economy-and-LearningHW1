@@ -1,6 +1,7 @@
 import random
 import numpy as np
 
+
 class Player(object):
     def __init__(self, num, func):
         self.number = num
@@ -13,12 +14,14 @@ class Player(object):
     def show(self):
         print("player num:", self.number, "choice:", self.choice, "ourNum:", self.resultNum)
 
+
 def f1(X1,X2,T):
     if (X1>130):
         choice = 'S'
     else:
         choice = 'R'
     return choice
+
 
 def f2(X1,X2,T):
     if (X2>100):
@@ -27,12 +30,14 @@ def f2(X1,X2,T):
         choice = 'R'
     return choice
 
+
 def f3(X1,X2,T):
     if (T>2):
         choice = 'S'
     else:
         choice = 'R'
     return choice
+
 
 def f4(X1,X2,T):
     if (X2-45 <= 30):
@@ -41,13 +46,15 @@ def f4(X1,X2,T):
         choice = 'R'
     return choice
 
+
 iterations = 1000
 iterationCounter = 0
 T = 4
 Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4)]
 ActivePlayers = Players
 resultsVector = [0, 0, 0, 0]
-print ([player.active for player in ActivePlayers])
+print([player.active for player in ActivePlayers])
+
 
 def calcResult(choice):
     if choice == 'S':
@@ -74,7 +81,6 @@ def eliminatePlayer(min_result):
     return num_to_eliminate
 
 
-
 def printNewRoundData(min_result):
     print("new round----------------------------------------------------")
     print("number of active players:", len(ActivePlayers))
@@ -84,11 +90,11 @@ def printNewRoundData(min_result):
 
     print("min num : ", min_result)
 
+
 def setupPlayersForNewIteration():
     for player in Players:
         player.active = True
         player.eliminatedOnRound = -1
-
 
 
 while (iterationCounter < iterations):
@@ -101,7 +107,7 @@ while (iterationCounter < iterations):
 
     while (T > 0):
 
-        #for every player activate the descision function
+        #  for every player activate the descision function
         for player in ActivePlayers:
             X2 = random.randint(0, 150)
             player.choice = player.func(X1, X2, T)
@@ -112,10 +118,10 @@ while (iterationCounter < iterations):
         resultNums = (player.resultNum for player in ActivePlayers)
 
         minNum = min(resultNums)
-        #printNewRoundData(minNum)
+        # printNewRoundData(minNum)
 
         # if there are at least 2 active players
-        if( len(ActivePlayers) > 1):
+        if len(ActivePlayers) > 1:
             num_to_eliminate = eliminatePlayer(minNum)
             for player in Players:
                 if player.number == num_to_eliminate:
