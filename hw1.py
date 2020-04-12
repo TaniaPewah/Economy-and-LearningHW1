@@ -1,4 +1,6 @@
 import random
+import numpy as np
+
 class Player(object):
     def __init__(self, num, func):
         self.number = num
@@ -51,7 +53,8 @@ def calcResult(choice):
     if choice == 'S':
         ourNum = X1
     else:
-        ourNum = random.randint(X2-45, X2+45)
+        #ourNum = random.randint(X2-45, X2+45)
+        ourNum = np.random.normal(X2, 45, 1)  # sample from Normal distribution
     return ourNum
 
 
@@ -85,6 +88,7 @@ def setupPlayersForNewIteration():
     for player in Players:
         player.active = True
         player.eliminatedOnRound = -1
+
 
 
 while (iterationCounter < iterations):
