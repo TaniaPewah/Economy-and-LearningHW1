@@ -5,13 +5,11 @@ class Player(object):
         self.choice = 'None'
         self.resultNum = -9999
         self.func = func
+        self.eliminatedOnRound = -1
         self.active = True
 
     def show(self):
         print("player num:", self.number, "choice:", self.choice, "ourNum:", self.resultNum)
-
-iterationCounter = 0
-T = 4
 
 def f1(X1,X2,T):
     if (X1>130):
@@ -41,15 +39,13 @@ def f4(X1,X2,T):
         choice = 'R'
     return choice
 
-
+iterations = 1000
+iterationCounter = 0
+T = 4
 Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4)]
-print ([player.active for player in Players])
-
-X1 = random.randint(0, 150)
-# TODO where to put X2
-X2 = random.randint(0, 150)
-
-
+ActivePlayers = Players
+resultsVector = [0, 0, 0, 0]
+print ([player.active for player in ActivePlayers])
 
 def calcResult(choice):
     if choice == 'S':
@@ -59,55 +55,83 @@ def calcResult(choice):
     return ourNum
 
 
-for player in Players:
-    print(player.resultNum)
+def eliminatePlayer(min_result):
+    new_players = list(filter(lambda player: player.resultNum == min_result, ActivePlayers))
+    """
+    print("min players : ")
+    for player in new_players:
+        print(player.resultNum)
+    """
+
+    player_to_eliminate = random.randint(0, len(new_players) - 1)
+    #print("player_to_eliminate from all minimum results array : ", player_to_eliminate)
+    #print("eliminating result : ", new_players[player_to_eliminate].resultNum)
+    num_to_eliminate = new_players[player_to_eliminate].number
+    #print("num_to_eliminate : ", num_to_eliminate)
+    return num_to_eliminate
 
 
 
-for player in Players:
-    print(player.resultNum)
-
-
-
-#while (iterationCounter < 100):
-while (T > 0):
-    ourNum = 0
-
+def printNewRoundData(min_result):
     print("new round----------------------------------------------------")
-    print("number of active players:", len(Players))
-
-    X1 = random.randint(0, 150)
-    #TODO move somewhere
-    X2 = random.randint(0, 150)
-
-    #for every player activate the descision function
-    for player in Players:
-        player.choice = player.func(X1, X2, T)
-
-    for player in Players:
-        player.resultNum = calcResult(player.choice)
-
-    for player in Players:
+    print("number of active players:", len(ActivePlayers))
+    print("player results:")
+    for player in ActivePlayers:
         print(player.resultNum)
 
-    resultNums = (player.resultNum for player in Players)
-    print("min num : ")
-    minNum = min(resultNums)
-    print(minNum)
+    print("min num : ", min_result)
 
-    # array of results
-
-    Players = list(filter(lambda player: player.resultNum > minNum, Players))
-
-    #how to eliminate only 1 player each turn
+def setupPlayersForNewIteration():
+    for player in Players:
+        player.active = True
+        player.eliminatedOnRound = -1
 
 
-    # for player in Players:
-    #    print(player.resultNum)
-    #remove someone from Players
-    T=T-1
+while (iterationCounter < iterations):
+    print("iteration ", iterationCounter)
+    X1 = random.randint(0, 150)
+    # TODO move somewhere
+    X2 = random.randint(0, 150)
 
+    setupPlayersForNewIteration()
+    ActivePlayers = Players
+    T = 4
 
+    while (T > 0):
+
+        #for every player activate the descision function
+        for player in ActivePlayers:
+            player.choice = player.func(X1, X2, T)
+
+        for player in ActivePlayers:
+            player.resultNum = calcResult(player.choice)
+
+        resultNums = (player.resultNum for player in ActivePlayers)
+
+        minNum = min(resultNums)
+        #printNewRoundData(minNum)
+
+        # if there are at least 2 active players
+        if( len(ActivePlayers) > 1):
+            num_to_eliminate = eliminatePlayer(minNum)
+            for player in Players:
+                if player.number == num_to_eliminate:
+                    player.active = False
+                    player.eliminatedOnRound = T
+                    break
+            ActivePlayers = list(filter(lambda player: player.number != num_to_eliminate, ActivePlayers))
+
+        T -= 1
+
+    for player in Players:
+        print("player num: ", player.number, " eliminated on round: ", player.eliminatedOnRound)
+        if player.eliminatedOnRound == -1:
+            resultsVector[player.number - 1] += 1
+
+    iterationCounter += 1
+
+print("printing overall results of winners")
+print (resultsVector)
 
 
 
