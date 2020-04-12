@@ -90,8 +90,6 @@ def setupPlayersForNewIteration():
 while (iterationCounter < iterations):
     print("iteration ", iterationCounter)
     X1 = random.randint(0, 150)
-    # TODO move somewhere
-    X2 = random.randint(0, 150)
 
     setupPlayersForNewIteration()
     ActivePlayers = Players
@@ -101,6 +99,7 @@ while (iterationCounter < iterations):
 
         #for every player activate the descision function
         for player in ActivePlayers:
+            X2 = random.randint(0, 150)
             player.choice = player.func(X1, X2, T)
 
         for player in ActivePlayers:
