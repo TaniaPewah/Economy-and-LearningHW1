@@ -16,7 +16,7 @@ class Player(object):
 
 
 def f1(X1,X2,T):
-    if (X1>130):
+    if (X1>90):
         choice = 'S'
     else:
         choice = 'R'
@@ -24,10 +24,10 @@ def f1(X1,X2,T):
 
 
 def f2(X1,X2,T):
-    if (X2>100):
-        choice = 'S'
-    else:
+    if (X2>110):
         choice = 'R'
+    else:
+        choice = 'S'
     return choice
 
 
@@ -38,21 +38,37 @@ def f3(X1,X2,T):
         choice = 'R'
     return choice
 
-
 def f4(X1,X2,T):
-    if (X2-45 <= 30):
+    if (X1 / T) + (2 * X1) > (X2 * T):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f5(X1,X2,T):
+    if (X2 < 70) and (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f6(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
         choice = 'S'
     else:
         choice = 'R'
     return choice
 
 
-iterations = 1000
+
+
+iterations = 3000
 iterationCounter = 0
-T = 4
-Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4)]
+T = 6
+Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4),
+           Player(5,f5), Player(6, f6)]
 ActivePlayers = Players
-resultsVector = [0, 0, 0, 0]
+resultsVector = [0, 0, 0, 0, 0, 0]
 print([player.active for player in ActivePlayers])
 
 
@@ -60,7 +76,6 @@ def calcResult(choice):
     if choice == 'S':
         ourNum = X1
     else:
-        #ourNum = random.randint(X2-45, X2+45)
         ourNum = np.random.normal(X2, 45, 1)  # sample from Normal distribution
     return ourNum
 
@@ -100,6 +115,7 @@ def setupPlayersForNewIteration():
 while (iterationCounter < iterations):
     print("iteration ", iterationCounter)
     X1 = random.randint(0, 150)
+    X2 = random.randint(0, 150)
 
     setupPlayersForNewIteration()
     ActivePlayers = Players
@@ -109,7 +125,6 @@ while (iterationCounter < iterations):
 
         #  for every player activate the descision function
         for player in ActivePlayers:
-            X2 = random.randint(0, 150)
             player.choice = player.func(X1, X2, T)
 
         for player in ActivePlayers:
