@@ -66,6 +66,24 @@ def f7 (X1,X2,T):
         choice = 'R'
     return choice
 
+
+'''
+def f8 (X1,X2,T):
+    if (X2 < 120):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f9 (X1,X2,T):
+    if (X2 < 120):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+'''
+
+
 def f8 (X1,X2,T):
     if (T < 6) or (X2-45 < X1):
         choice = 'S'
@@ -80,20 +98,20 @@ def f9(X1,X2,T):
             choice = 'S'
         else:
             choice = 'R'
+        return choice
 
-    elif (T <= 4):
+    elif (T <= 3):
         if (X2 < 80) or (X1 > 70):
             choice = 'S'
         else:
             choice = 'R'
+        return choice
 
 
-    return choice
-
-
+T = 9
 iterations = 3000
 iterationCounter = 0
-T = 9
+
 Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4),
            Player(5, f5), Player(6, f6), Player(7, f7), Player(8, f8), Player(9, f9)]
 ActivePlayers = Players
