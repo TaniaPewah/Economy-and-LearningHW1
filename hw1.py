@@ -59,16 +59,45 @@ def f6(X1,X2,T):
         choice = 'R'
     return choice
 
+def f7 (X1,X2,T):
+    if (X2 < 120):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f8(X1,X2,T):
+    if (X1 < 50) or (X2 > 95):
+        choice = 'R'
+    else:
+        choice = 'S'
+    return choice
+
+def f9(X1,X2,T):
+    if (T >= 10):
+        if (X2 < 70) or (X1 > 70):
+            choice = 'S'
+        else:
+            choice = 'R'
+
+    elif (T <= 9):
+        if (X2 < 80) or (X1 > 70):
+            choice = 'S'
+        else:
+            choice = 'R'
+
+
+    return choice
 
 
 
 iterations = 3000
 iterationCounter = 0
-T = 6
+T = 9
 Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4),
-           Player(5,f5), Player(6, f6)]
+           Player(5, f5), Player(6, f6), Player(7, f7), Player(8, f8), Player(9, f9)]
 ActivePlayers = Players
-resultsVector = [0, 0, 0, 0, 0, 0]
+resultsVector = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 print([player.active for player in ActivePlayers])
 
 
@@ -119,7 +148,7 @@ while (iterationCounter < iterations):
 
     setupPlayersForNewIteration()
     ActivePlayers = Players
-    T = 4
+    T = 9
 
     while (T > 0):
 
@@ -155,7 +184,7 @@ while (iterationCounter < iterations):
     iterationCounter += 1
 
 print("printing overall results of winners")
-print (resultsVector)
+print(resultsVector)
 
 
 
