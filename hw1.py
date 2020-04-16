@@ -66,21 +66,22 @@ def f7 (X1,X2,T):
         choice = 'R'
     return choice
 
-def f8(X1,X2,T):
-    if (X1 < 50) or (X2 > 95):
-        choice = 'R'
-    else:
+def f8 (X1,X2,T):
+    if (T < 6) or (X2-45 < X1):
         choice = 'S'
+    else:
+        choice = 'R'
     return choice
 
+
 def f9(X1,X2,T):
-    if (T >= 10):
+    if (T >= 5):
         if (X2 < 70) or (X1 > 70):
             choice = 'S'
         else:
             choice = 'R'
 
-    elif (T <= 9):
+    elif (T <= 4):
         if (X2 < 80) or (X1 > 70):
             choice = 'S'
         else:
@@ -88,7 +89,6 @@ def f9(X1,X2,T):
 
 
     return choice
-
 
 
 iterations = 3000
