@@ -1,7 +1,11 @@
 import random
 import numpy as np
-
-
+if1Counter = 0
+elif2Counter = 0
+elif3Counter = 0
+elif4Counter = 0
+elif5Counter = 0
+elseCounter = 0
 class Player(object):
     def __init__(self, num, func):
         self.number = num
@@ -13,7 +17,6 @@ class Player(object):
 
     def show(self):
         print("player num:", self.number, "choice:", self.choice, "ourNum:", self.resultNum)
-
 
 def f1(X1,X2,T):
     if (X1>90):
@@ -32,59 +35,20 @@ def f2(X1,X2,T):
 
 
 def f3(X1,X2,T):
-    if (T>2):
-        choice = 'S'
-    else:
-        choice = 'R'
-    return choice
-
-def f4(X1,X2,T):
-    if (X1 / T) + (2 * X1) > (X2 * T):
-        choice = 'S'
-    else:
-        choice = 'R'
-    return choice
-
-def f5(X1,X2,T):
-    if (X2 < 70) and (X1 > 70):
-        choice = 'S'
-    else:
-        choice = 'R'
-    return choice
-
-def f6(X1,X2,T):
     if (X2 < 70) or (X1 > 70):
         choice = 'S'
     else:
         choice = 'R'
     return choice
 
-def f7 (X1,X2,T):
+def f4 (X1,X2,T):
     if (X2 < 120):
         choice = 'S'
     else:
         choice = 'R'
     return choice
 
-
-'''
-def f8 (X1,X2,T):
-    if (X2 < 120):
-        choice = 'S'
-    else:
-        choice = 'R'
-    return choice
-
-def f9 (X1,X2,T):
-    if (X2 < 120):
-        choice = 'S'
-    else:
-        choice = 'R'
-    return choice
-'''
-
-
-def f8 (X1,X2,T):
+def f5 (X1,X2,T):
     if (T < 6) or (X2-45 < X1):
         choice = 'S'
     else:
@@ -92,30 +56,71 @@ def f8 (X1,X2,T):
     return choice
 
 
-def f9(X1,X2,T):
+def f6(X1,X2,T):
+    choice ='S'
     if (T >= 5):
         if (X2 < 70) or (X1 > 70):
             choice = 'S'
         else:
             choice = 'R'
-        return choice
-
     elif (T <= 3):
         if (X2 < 80) or (X1 > 70):
             choice = 'S'
         else:
             choice = 'R'
-        return choice
+    return choice
 
+def f7(X1,X2,T):
+    if (X2 < 75) and (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
 
-T = 9
-iterations = 3000
+def f8(X1,X2,T):
+    global elseCounter
+    global elif2Counter
+    global elif3Counter
+    global elif4Counter
+    global elif5Counter
+    global if1Counter
+    if (T == 2) and (X1 >= X2):
+        choice = 'S'
+    elif (T == 2) and (X1 < X2):
+        choice = 'R'
+    else:
+        numX1win = sum(np.random.normal(X2, 45, 200) < X1)
+
+        #if X1 won more than half of times and (T >= 10)
+        #num of players is 8
+        if (numX1win > 100) and (T >= 4):
+            if1Counter += 1
+            choice = 'S'
+        elif (numX1win < 30):
+            elif2Counter += 1
+            choice = 'R'
+        elif (numX1win > 190):
+            elif3Counter += 1
+            choice = 'S'
+        elif (numX1win < 100) and (T < 4):
+            elif4Counter += 1
+            choice = 'R'
+        #elif (T < (-0.03158*numX1win + 8)): # num of players is 8
+        #    elif5Counter += 1
+        #    choice = 'R'
+        else:
+            elseCounter += 1
+            choice = 'S'
+    return choice
+
+T = 8
+iterations = 4000
 iterationCounter = 0
 
 Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4),
-           Player(5, f5), Player(6, f6), Player(7, f7), Player(8, f8), Player(9, f9)]
+           Player(5, f5), Player(6, f6), Player(7, f7), Player(8, f8)]
 ActivePlayers = Players
-resultsVector = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+resultsVector = [0, 0, 0, 0, 0, 0, 0, 0]
 print([player.active for player in ActivePlayers])
 
 
@@ -160,7 +165,7 @@ def setupPlayersForNewIteration():
 
 
 while (iterationCounter < iterations):
-    print("iteration ", iterationCounter)
+    #print("iteration ", iterationCounter)
     X1 = random.randint(0, 150)
     X2 = random.randint(0, 150)
 
@@ -195,7 +200,7 @@ while (iterationCounter < iterations):
         T -= 1
 
     for player in Players:
-        print("player num: ", player.number, " eliminated on round: ", player.eliminatedOnRound)
+        #print("player num: ", player.number, " eliminated on round: ", player.eliminatedOnRound)
         if player.eliminatedOnRound == -1:
             resultsVector[player.number - 1] += 1
 
@@ -203,6 +208,13 @@ while (iterationCounter < iterations):
 
 print("printing overall results of winners")
 print(resultsVector)
+print(if1Counter)
+print(elif2Counter)
+print(elif3Counter)
+print(elif4Counter)
+print(elif5Counter)
+print(elseCounter)
+
 
 
 
