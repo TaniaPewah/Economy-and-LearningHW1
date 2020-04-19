@@ -1,10 +1,13 @@
 import random
 import numpy as np
+new_if_counter = 0
 if1Counter = 0
 elif2Counter = 0
 elif3Counter = 0
 elif4Counter = 0
 elif5Counter = 0
+elif6Counter = 0
+elif7Counter = 0
 elseCounter = 0
 class Player(object):
     def __init__(self, num, func):
@@ -89,27 +92,31 @@ def f7(X1,X2,T):
     return choice
 
 def f8(X1,X2,T):
+    global new_if_counter
     global elseCounter
     global elif2Counter
     global elif3Counter
     global elif4Counter
     global elif5Counter
+    global elif6Counter
+    global elif7Counter
     global if1Counter
 
-    if (T == 2) and (X1 >= X2):
+    if X1 >= X2:
         choice = 'S'
-    elif (T == 2) and (X1 < X2):
-        choice = 'R'
+        new_if_counter += 1
+    #elif (T <= 2) and (X1 < X2):
+    #    choice = 'R'
     else:
         normalVectorOfX2 = np.random.normal(X2, 45, 200)
         numX1win = sum(normalVectorOfX2 < X1)/200 # number ot times X1 won the result of X2 distribution
 
         #if X1 won more than half of times and (T >= 10)
         #num of players is 8
-        if (numX1win > 0.5) and (T >= 3):
+        if (numX1win > 0.3) and (T >= 3):
             if1Counter += 1
             choice = 'S'
-        elif (numX1win < 0.2):
+        elif (numX1win <= 0.2):
             elif2Counter += 1
             choice = 'R'
         elif (numX1win > 0.95):
@@ -118,26 +125,39 @@ def f8(X1,X2,T):
         elif (numX1win < 0.5) and (T < 5):
             elif4Counter += 1
             choice = 'R'
-        elif (T < (-10 * numX1win + 7)): # num of players is 8
-            elif5Counter += 1
-            choice = 'R'
-        elif (T < (-50* numX1win + 10)):  # num of players is 8
-            elif5Counter += 1
-            choice = 'R'
+        #elif ((T > 4) and (0.2 < numX1win < 0.4)):  # num of players is 8
+        #    elif6Counter += 1
+        #    choice = 'S'
+        #elif ((4 > T > 2) and (0.5 < numX1win < 0.95)):  # num of players is 8
+        #    elif7Counter += 1
+        #    choice = 'R'
         else:
             elseCounter += 1
             choice = 'S'
     return choice
 
 def f9(X1,X2,T):
-    if random.randint(0, 1) == 1:
+    normalVectorOfX2 = np.random.normal(X2, 45, 200)
+    numX1win = sum(normalVectorOfX2 < X1) / 200
+
+    if numX1win >= 0.3:
+        choice = 'S'
+    elif T >= 6:
         choice = 'S'
     else:
         choice = 'R'
     return choice
 
+
 def f10(X1,X2,T):
-    return 'S'
+    normalVectorOfX2 = np.random.normal(X2, 45, 200)
+    numX1win = sum(normalVectorOfX2 < X1) / 200
+
+    if numX1win >= 0.3:
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
 
 T = 10
 iterations = 10000
@@ -148,7 +168,7 @@ Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4),
            Player(9,f9), Player(10,f10)]
 ActivePlayers = Players
 resultsVector = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-print([player.active for player in ActivePlayers])
+#  print([player.active for player in ActivePlayers])
 
 
 def calcResult(choice):
@@ -235,19 +255,13 @@ while (iterationCounter < iterations):
 
 print("printing overall results of winners")
 print(resultsVector)
-print(if1Counter)
-print(elif2Counter)
-print(elif3Counter)
-print(elif4Counter)
-print(elif5Counter)
-print(elseCounter)
-
-
-
-
-
-
-
-
-
+print('new: '+str(new_if_counter))
+print('1: '+ str(if1Counter))
+print('2: '+str(elif2Counter))
+print('3: '+str(elif3Counter))
+print('4 :'+str(elif4Counter))
+print('5: '+str(elif5Counter))
+#  print(elif6Counter)
+#  print(elif7Counter)
+print('else: '+str(elseCounter))
 
