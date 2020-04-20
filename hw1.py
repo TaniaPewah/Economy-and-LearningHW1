@@ -165,7 +165,7 @@ def f10(X1,X2,T):
     global ruleThatFailed
     global vectoCondCounter
 
-    if (T == 2) and (X1 >= X2 - 30):
+    if (T == 2) and (X1 >= X2):
         ruleThatFailed = 0
         vectoCondCounter[0] +=1
         choice = 'S'
@@ -175,48 +175,35 @@ def f10(X1,X2,T):
         choice = 'R'
 
     else:
+
         normalVectorOfX2 = np.random.normal(X2, 45, 200)
         numX1win = sum(normalVectorOfX2 < X1) / 200  # number ot times X1 won the result of X2 distribution
 
         #if X1 won more than half of times and (T >= 10)
         #num of players is 8
-        if (numX1win > 0.5) and (T >= 4):
 
+        if (numX1win > 0.5) and (T>=4) :
             ruleThatFailed = 2
             vectoCondCounter[2] += 1
             choice = 'S'
-        elif (numX1win < 0.1):
+        elif (numX1win < 0.15):
             vectoCondCounter[3] += 1
             ruleThatFailed = 3
             choice = 'R'
-        elif (numX1win > 0.95):
+
+        elif T > (-23*numX1win + 10) :
             vectoCondCounter[4] += 1
             ruleThatFailed = 4
             choice = 'S'
-        elif (numX1win < 0.5) and (T < 4):
+
+        else:
             vectoCondCounter[5] += 1
             ruleThatFailed = 5
             choice = 'R'
-        elif (T < (12 * numX1win )):
-            vectoCondCounter[6] += 1
-            ruleThatFailed = 6
-            choice = 'S'
-        #elif (T < (-28 * numX1win + 20)):
-        #    elif6Counter += 1
-        #    choice = 'R'
-        #elif (T < (-30 * numX1win + 30)):  # num of players is 8
-        #    elif7Counter += 1
-        #    choice = 'R'
-        else:
-            vectoCondCounter[7] += 1
-            ruleThatFailed = 7
-            choice = 'S'
-
-
     return choice
 
 T = 10
-iterations = 1500
+iterations = 5000
 iterationCounter = 0
 
 Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4),
@@ -234,7 +221,6 @@ def calcResult(choice):
         ourNum = np.random.normal(X2, 45, 1)  # sample from Normal distribution
     return ourNum
 
-
 def eliminatePlayer(min_result):
     new_players = list(filter(lambda player: player.resultNum == min_result, ActivePlayers))
     """
@@ -250,7 +236,6 @@ def eliminatePlayer(min_result):
     #print("num_to_eliminate : ", num_to_eliminate)
     return num_to_eliminate
 
-
 def printNewRoundData(min_result):
     print("new round----------------------------------------------------")
     print("number of active players:", len(ActivePlayers))
@@ -260,12 +245,10 @@ def printNewRoundData(min_result):
 
     print("min num : ", min_result)
 
-
 def setupPlayersForNewIteration():
     for player in Players:
         player.active = True
         player.eliminatedOnRound = -1
-
 
 while (iterationCounter < iterations):
     #print("iteration ", iterationCounter)
@@ -320,7 +303,7 @@ print(vectoCondCounter)
 print("printing rule that failed")
 print(vectorFailedRules)
 
-for i in range(8):
+for i in range(6):
     vectorFailedRate[i] = vectorFailedRules[i]/vectoCondCounter[i]
     print (i, " : ",vectorFailedRate[i] )
 
