@@ -1,5 +1,5 @@
 import random
-import numpy as np
+
 new_if_counter = 0
 if1Counter = 0
 elif2Counter = 0
@@ -63,18 +63,18 @@ def f5(X1, X2, T):
     elif (T == 2) and (X1 < X2):
         choice = 'R'
     else:
-        normalVectorOfX2 = np.random.normal(X2, 45, 200)
-        numX1win = sum(normalVectorOfX2 < X1) / 200  # number ot times X1 won the result of X2 distribution
+        normalVectorOfX2 = np.random.normal(X2, 45, 100)
+        numX1win = sum(normalVectorOfX2 < X1) / 100  # number ot times X1 won the result of X2 distribution
 
         # if X1 won more than half of times and (T >= 10)
         # num of players is 8
-        if (numX1win > 0.5) and (T >= 4):
+        if (numX1win > 0.5) and (T >= 10):
             choice = 'S'
         elif (numX1win < 0.15):
             choice = 'R'
         elif (numX1win > 0.95):
             choice = 'S'
-        elif (numX1win < 0.5) and (T < 4):
+        elif (numX1win < 0.5) and (T < 10):
             choice = 'R'
         elif (T < (-10 * numX1win + 7)):  # num of players is 8
             choice = 'R'
@@ -87,8 +87,8 @@ def f6(X1,X2,T):
     if X1 >= X2:
         choice = 'S'
     else:
-        normalVectorOfX2 = np.random.normal(X2, 45, 200)
-        numX1win = sum(normalVectorOfX2 < X1)/200 # number ot times X1 won the result of X2 distribution
+        normalVectorOfX2 = np.random.normal(X2, 45, 100)
+        numX1win = sum(normalVectorOfX2 < X1)/100 # number ot times X1 won the result of X2 distribution
 
         #if X1 won more than half of times and (T >= 10)
         #num of players is 8
@@ -98,7 +98,7 @@ def f6(X1,X2,T):
             choice = 'R'
         elif (numX1win > 0.95):
             choice = 'S'
-        elif (numX1win < 0.5) and (T < 5):
+        elif (numX1win < 0.5) and (T < 9):
             choice = 'R'
         else:
             choice = 'S'
@@ -134,8 +134,8 @@ def f9(X1,X2,T):
     elif (T == 2) and (X1 < X2):
         choice = 'R'
     else:
-        normalVectorOfX2 = np.random.normal(X2, 45, 200)
-        numX1win = sum(normalVectorOfX2 < X1) / 200  # number ot times X1 won the result of X2 distribution
+        normalVectorOfX2 = np.random.normal(X2, 45, 100)
+        numX1win = sum(normalVectorOfX2 < X1) / 100  # number ot times X1 won the result of X2 distribution
 
         #if X1 won more than half of times and (T >= 10)
         #num of players is 8
@@ -154,6 +154,76 @@ def f9(X1,X2,T):
     return choice
 
 def f10(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f11(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f12(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f13(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f14(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f15(X1,X2,T):
+    if (X2 < 70) or (X1 > 80):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f16(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f17(X1,X2,T):
+    if (X2 < 90) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+
+def f18(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+def f19(X1,X2,T):
+    if (X2 < 70) or (X1 > 70):
+        choice = 'S'
+    else:
+        choice = 'R'
+    return choice
+import numpy as np
+def f20(X1,X2,T):
+
     global elseCounter
     global elif2Counter
     global elif3Counter
@@ -176,13 +246,13 @@ def f10(X1,X2,T):
 
     else:
 
-        normalVectorOfX2 = np.random.normal(X2, 45, 200)
-        numX1win = sum(normalVectorOfX2 < X1) / 200  # number ot times X1 won the result of X2 distribution
+        normalVectorOfX2 = np.random.normal(X2, 45, 500)
+        numX1win = sum(normalVectorOfX2 < X1) / 500  # number ot times X1 won the result of X2 distribution
 
         #if X1 won more than half of times and (T >= 10)
         #num of players is 8
 
-        if (numX1win > 0.5) and (T>=4) :
+        if (numX1win > 0.5) and (T>= 6):
             ruleThatFailed = 2
             vectoCondCounter[2] += 1
             choice = 'S'
@@ -191,26 +261,32 @@ def f10(X1,X2,T):
             ruleThatFailed = 3
             choice = 'R'
 
-        elif T > (-23*numX1win + 10) :
+        elif (numX1win > 0.6):
             vectoCondCounter[4] += 1
             ruleThatFailed = 4
             choice = 'S'
 
-        else:
+        elif T > (-120*numX1win + 40) :
             vectoCondCounter[5] += 1
             ruleThatFailed = 5
+            choice = 'S'
+        else:
             choice = 'R'
     return choice
 
-T = 10
-iterations = 5000
+T = 20
+iterations = 6000
 iterationCounter = 0
 
 Players = [Player(1, f1), Player(2, f2), Player(3, f3), Player(4, f4),
            Player(5, f5), Player(6, f6), Player(7, f7), Player(8, f8),
-           Player(9,f9), Player(10, f10)]
+           Player(9,f9), Player(10, f10),
+           Player(11, f11), Player(12, f12), Player(13, f13), Player(14, f14),
+           Player(15, f15), Player(16, f16), Player(17, f17), Player(18, f18),
+           Player(19, f19), Player(20, f20)
+           ]
 ActivePlayers = Players
-resultsVector = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+resultsVector = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,]
 #  print([player.active for player in ActivePlayers])
 
 
@@ -251,13 +327,14 @@ def setupPlayersForNewIteration():
         player.eliminatedOnRound = -1
 
 while (iterationCounter < iterations):
+
     #print("iteration ", iterationCounter)
     X1 = random.randint(0, 150)
     X2 = random.randint(0, 150)
 
     setupPlayersForNewIteration()
     ActivePlayers = Players
-    T = 9
+    T = 20
 
     while (T > 0):
 
